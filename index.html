@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Dudo Mucho! - El Juego de Faroleo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="game-container">
+        
+        <div id="screen-setup" class="screen active">
+            <h1 class="game-title">¡DUDO MUCHO!</h1>
+            <p class="subtitle">Selecciona una dificultad para empezar:</p>
+            
+            <div class="difficulty-selector">
+                <button class="btn-diff easy" onclick="selectDifficulty('easy')">🟢 FÁCIL</button>
+                <button class="btn-diff medium" onclick="selectDifficulty('medium')">🟡 MEDIO</button>
+                <button class="btn-diff hard" onclick="selectDifficulty('hard')">🔴 DIFÍCIL</button>
+            </div>
+            
+            <p id="selected-text">Dificultad seleccionada: <span id="current-diff-name">Ninguna</span></p>
+            
+            <button id="btn-start" class="btn-main disabled" onclick="startGame()" disabled>EMPEZAR JUEGO</button>
+        </div>
+
+<div id="screen-game" class="screen">
+    <div class="game-header">
+        <span id="game-diff-badge" class="badge">DIFICULTAD</span>
+        <div id="timer-container">
+            <span id="timer-text">30</span>s
+            <div id="timer-bar"></div>
+        </div>
+    </div>
+
+    <div class="category-display">
+        <p id="category-text">Cargando categoría...</p>
+    </div>
+
+    <div class="game-footer">
+        <div class="button-group">
+            <button class="btn-back-rect" onclick="changeCategory()">Otra categoría</button>
+            <button class="btn-back-rect" onclick="resetGame()">Volver a elegir</button>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+/* --- CONFIGURACIÓN DE COLORES Y FUENTES ORIGINAL --- */
+:root {
+    --bg-dark: #121212; 
+    --text-main: #ffffff;
+    --text-muted: #b0b0b0;
+    
+    /* Colores Dificultad (Modernos y Vivos) */
+    --easy-color: #2ecc71; 
+    --medium-color: #f1c40f; 
+    --hard-color: #e74c3c; 
+    
+    /* Título Dorado 3D */
+    --title-gold: #f39c12;
+    --title-shadow: #c0392b;
+
+    /* Fuentes Modernas */
+    --font-title: 'Bungee', cursive; /* Para el título dorado */
+    --font-body: 'Poppins', sans-serif; /* Para todo el resto */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    touch-action: manipulation; /* Evita zoom accidental en móvil */
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-dark); /* Fondo oscuro por defecto */
+    color: var(--text-main);
+    height: 100vh;
+    height: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: background-color 0.5s ease;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 500px; /* Ancho máximo para que no se estire en PC */
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- GESTIÓN DE PANTALLAS (Transiciones suaves y limpias) --- */
+.screen {
+    position: absolute;
+    inset: 0;
+    padding: 40px 20px; /* Buen espaciado */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* --- PANTALLA INICIO (ORIGINAL, CON BUEN ESPACIADO) --- */
+#screen-setup {
+    justify-content: center; /* Centrado vertical */
+}
+
+.game-title {
+    font-family: var(--font-title);
+    font-size: clamp(2.5rem, 12vw, 3.8rem); /* Responsivo */
+    color: var(--title-gold);
+    /* Efecto volumen 3D */
+    text-shadow: 
+        0 2px 0 var(--title-shadow),
+        0 4px 0 rgba(0,0,0,0.5),
+        0 10px 15px rgba(0,0,0,0.3);
+    line-height: 1.1;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 40px; /* Espaciado generoso */
+}
+
+.difficulty-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaciado entre botones */
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 30px;
+}
+
+/* Botones redondeados y modernos */
+.btn-diff {
+    font-family: var(--font-title);
+    padding: 20px;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.3rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Círculo indicador dentro del botón */
+.btn-diff::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    background-color: rgba(255,255,255,0.3);
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.btn-diff.easy { background-color: var(--easy-color); }
+.btn-diff.medium { background-color: var(--medium-color); color: black; }
+.btn-diff.hard { background-color: var(--hard-color); }
+
+.btn-diff:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+}
+
+/* Estilo de selección */
+.btn-diff.selected {
+    box-shadow: 0 0 25px rgba(255,255,255,0.4);
+    transform: scale(1.03);
+    border: 2px solid white;
+}
+
+#selected-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+}
+
+#current-diff-name {
+    font-weight: bold;
+    color: var(--text-main);
+}
+
+/* Botón EMPEZAR azul redondeado */
+.btn-main {
+    font-family: var(--font-title);
+    padding: 18px 45px;
+    font-size: 1.3rem;
+    background-color: #2c3e50;
+    color: #7f8c8d; /* Texto apagado por defecto */
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+
+.btn-main:not(.disabled) {
+    background-color: #34495e;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.btn-main.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* --- PANTALLA JUEGO (Con contornos para legibilidad) --- */
+#screen-game {
+    justify-content: space-between; /* Arriba, Centro, Abajo */
+}
+
+.game-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Badge de dificultad redondeado */
+.badge {
+    font-family: var(--font-title);
+    padding: 8px 18px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.7); /* Más oscuro para contraste */
+    font-size: 0.9rem;
+    color: white;
+    letter-spacing: 1px;
+}
+
+/* TEMPORIZADOR CON CONTORNO NEGRO (ARREGLADO) */
+#timer-container {
+    font-family: var(--font-title);
+    font-size: 2.8rem; /* Grande */
+    position: relative;
+    color: white;
+    /* Contorno negro fino para resaltar sobre verde/amarillo */
+    -webkit-text-stroke: 1.5px black; 
+    filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.4));
+}
+
+/* BARRA CON CONTORNO NEGRO (ARREGLADO) */
+#timer-bar {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    height: 8px;
+    background-color: white;
+    width: 100%;
+    border-radius: 10px;
+    transition: width 1s linear;
+    /* Contorno para la barra */
+    border: 1.5px solid black;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+}
+
+.category-display {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#category-text {
+    font-family: var(--font-body);
+    font-size: clamp(2rem, 9vw, 3.2rem); /* Grande y responsivo */
+    font-weight: 800;
+    color: black; /* Texto negro sobre fondo de color */
+    text-transform: uppercase;
+    line-height: 1.1;
+    word-wrap: break-word;
+}
+
+/* --- BOTONES INFERIORES REDONDEADOS ORIGINALES --- */
+.game-footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Buen espaciado */
+    width: 100%;
+    align-items: center;
+}
+
+.btn-back-rect {
+    font-family: var(--font-body);
+    width: 85%;
+    max-width: 320px;
+    background-color: rgba(0,0,0,0.7); /* Fondo oscuro */
+    border: none;
+    border-radius: 12px; /* Redondeado sutil */
+    color: white;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-back-rect:active {
+    transform: translateY(2px);
+    background-color: rgba(0,0,0,0.9);
+}
+
+/* Animaciones */
+.blink { animation: blinker 0.6s linear infinite; }
+@keyframes blinker { 50% { opacity: 0.2; } }
+
+/* Ajustes para pantallas muy pequeñas (Mobile First) */
+@media (max-height: 650px) {
+    .screen { padding: 20px 15px; }
+    .game-title { font-size: 2.2rem; margin-bottom: 5px; }
+    .subtitle { margin-bottom: 20px; }
+    .difficulty-selector { gap: 10px; margin-bottom: 20px;}
+    .btn-diff { padding: 15px; font-size: 1.1rem;}
+    #selected-text { margin-bottom: 20px; }
+    .btn-main { padding: 15px 35px; font-size: 1.1rem;}
+    
+    .game-header { gap: 10px; }
+    #timer-container { font-size: 2.2rem; }
+    #category-text { font-size: 1.8rem; }
+    .btn-back-rect { padding: 12px; font-size: 1rem; }
+    .button-group { gap: 10px; }
+}
