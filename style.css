@@ -95,20 +95,29 @@ body {
     margin-bottom: 30px;
 }
 
-.btn-diff {
-    font-family: var(--font-title);
-    padding: 18px;
-    border: none;
-    border-radius: 15px;
-    font-size: 1.3rem;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
+/* Busca el bloque de .btn-diff y añade/modifica: */
+
+.btn-diff.any { 
+    background-color: #9b59b6; /* Púrpura */
+    color: white; 
 }
+
+/* Ajuste de márgenes en el selector para que entren 4 botones */
+.difficulty-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Reduje un poco el gap de 15 a 10 */
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 20px; /* Reduje de 30 a 20 */
+}
+
+/* Ajuste para móviles cortos en el @media final */
+@media (max-height: 650px) {
+    .difficulty-selector { gap: 6px; }
+    .btn-diff { padding: 10px; font-size: 1rem; }
+}
+
 
 .btn-diff.easy { background-color: var(--easy-color); }
 .btn-diff.medium { background-color: var(--medium-color); color: black; }
